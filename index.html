@@ -63,10 +63,7 @@
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
         var createScene = async function () {
 
-    //FullScreen
-    var canvas = document.getElementById("renderCanvas");
-    canvas.requestFullscreen();
-
+   
 
     // This creates a basic Babylon Scene object (non-mesh)
     var scene = new BABYLON.Scene(engine);
@@ -91,6 +88,10 @@
     // GUI
     let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
     let loadedGUI = await advancedTexture.parseFromSnippetAsync("#R2TFE8#10");
+
+    //FullScreen
+    var canvas = document.getElementById("renderCanvas");
+    canvas.requestFullscreen();
 
 
     return scene;
