@@ -1,1 +1,1 @@
-window.var vartest = "hallihallo";
+var vartest = "hallihallo";
