@@ -1,2 +1,1 @@
-var vartest = "hallihallo";
-export vartest;
+window.var vartest = "hallihallo";
