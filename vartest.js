@@ -1,1 +1,2 @@
-export var vartest = "hallihallo";
+var vartest = "hallihallo";
+export vartest;
