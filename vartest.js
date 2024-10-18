@@ -1,1 +1,1 @@
-var vartest = "hallihallo";
+var lama = "hallihallo";
