@@ -61,16 +61,14 @@
         var scene = null;
         var sceneToRender = null;
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        var createScene = async function () {
+        // You have to create a function called createScene. This function must return a BABYLON.Scene object
+// You can reference the following variables: engine, canvas
+// You must at least define a camera
 
-   
-
-    // This creates a basic Babylon Scene object (non-mesh)
+var createScene = function () {
     var scene = new BABYLON.Scene(engine);
 
-
-
-    // This creates and positions a free camera (non-mesh)
+    //var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 12, BABYLON.Vector3.Zero(), scene);
     var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
 
     // This targets the camera to scene origin
@@ -79,20 +77,22 @@
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
-    // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    // Loading extern scripts
+    function ladeExternesSkript(skriptPfad) {
+        return new Promise(resolve => {
+            const script = document.createElement('script');
+            script.src = skriptPfad;
+            script.onload = resolve;
+            document.head.appendChild(script);
+        });
+    }
 
-    // Default intensity is 1. Let's dim the light a small amount
-    light.intensity = 0.7;
+    ladeExternesSkript('./vartest.js')
+        .then(() => {
+            // Hier kannst du auf die Variablen aus vartest.js zugreifen, da das Skript jetzt geladen wurde
+            console.log(lama);
 
-    // GUI
-    let advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI", true, scene);
-    let loadedGUI = await advancedTexture.parseFromSnippetAsync("#R2TFE8#10");
-
-    //FullScreen
-    var canvas = document.getElementById("renderCanvas");
-    canvas.requestFullscreen();
-
+        });
 
     return scene;
 };
@@ -113,8 +113,7 @@
         if (!engine) throw 'engine should not be null.';
         startRenderLoop(engine, canvas);
         window.scene = createScene();};
-        initFunction().then(() => {scene.then(returnedScene => { sceneToRender = returnedScene; });
-                            
+        initFunction().then(() => {sceneToRender = scene                    
         });
 
         // Resize
